@@ -22,7 +22,7 @@ export const projects = [
     description:
       "Desarrollo de una API RESTful personalizada para una tienda en línea con integraciones de terceros.",
     tags: ["Node.js", "MySQL", "TypeScript", "TypeORM", "Auth0", "Swagger"],
-    link: "https://github.com/AFacundoOrtiz/Ecommerce-Nestjs",
+    link: "https://ecommerce-nestjs-production.up.railway.app/api",
     github: "https://github.com/AFacundoOrtiz/Ecommerce-Nestjs",
     highlight: true,
   },

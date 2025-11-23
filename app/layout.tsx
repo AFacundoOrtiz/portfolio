@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Facundo Ortiz | Backend Developer",
-  description: "Portafolio de Facundo Ortiz. Ingeniero en formación y especialista en Backend con Node.js, NestJS y Google Cloud Platform.",
+  title: "Facundo Ortiz | Fullstack Developer",
+  description: "Portafolio de Facundo Ortiz. Fullstack Developer especializado en Backend, arquitectura de software y el ecosistema Node.js.",
   icons: {
     icon: "/profile.png",
   },

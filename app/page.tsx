@@ -25,7 +25,7 @@ export default function Home() {
         <div>
           <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-2">Facundo Ortiz</h1>
           <h2 className="text-xl md:text-2xl text-muted-foreground font-medium">
-            Backend Developer | Node.js & GCP Specialist
+          Fullstack Developer especializado en Backend | Ecosistema Node.js
           </h2>
           <p className="mt-4 max-w-xl text-muted-foreground leading-relaxed">
             Ingeniero en formación apasionado por la arquitectura de software. 

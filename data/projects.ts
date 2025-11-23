@@ -17,5 +17,13 @@ export const projects = [
     github: "https://github.com/AgroTrackP/AgroTrack",
     highlight: true,
   },
-  // Agrega aquí el de E-commerce
+  {
+    title: "API RESTful para E-commerce",
+    description:
+      "Desarrollo de una API RESTful personalizada para una tienda en línea con integraciones de terceros.",
+    tags: ["Node.js", "SQL"],
+    link: "https://github.com/AFacundoOrtiz/Ecommerce-Nestjs",
+    github: "https://github.com/AFacundoOrtiz/Ecommerce-Nestjs",
+    highlight: true,
+  },
 ];

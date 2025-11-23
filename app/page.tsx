@@ -5,13 +5,11 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter }
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Github, Linkedin, Mail, Terminal } from "lucide-react"; // Iconos
+import { Github, Linkedin, Mail, Terminal, GraduationCap, FileText, ExternalLink } from "lucide-react"; // Iconos
 import Image from "next/image";
 import { ContactButton } from "@/components/ui/ContactButton";
 import { ModeToggle } from "@/components/ui/ModeToggle";
 import { education } from "@/data/education";
-import { GraduationCap } from "lucide-react";
-import { FileText } from "lucide-react";
 
 export default function Home() {
   return (
@@ -138,13 +136,36 @@ export default function Home() {
                   ))}
                 </div>
               </CardContent>
-              <CardFooter className="gap-2 pt-4">
-                <Button asChild variant="default" className="w-full">
-                  <a href={project.link} target="_blank" rel="noopener noreferrer">
-                    {project.link.includes("notion") ? "Ver Documentación" : "Ver Demo/Repo"}
-                  </a>
-                </Button>
-              </CardFooter>
+              <CardFooter className="flex gap-2 pt-4">
+  {/* 1. Botón de GitHub (Solo si existe el link) */}
+  {project.github && (
+    <Button asChild variant="outline" className="flex-1">
+      <a href={project.github} target="_blank" rel="noopener noreferrer">
+        <Github className="mr-2 h-4 w-4" /> Código
+      </a>
+    </Button>
+  )}
+
+  {/* 2. Botón Principal (Demo, Docs o Notion) */}
+  {project.link && project.link !== project.github && (
+    <Button asChild variant="default" className="flex-1">
+      <a href={project.link} target="_blank" rel="noopener noreferrer">
+        {/* Icono y Texto dinámico según el tipo de link */}
+        <ExternalLink className="mr-2 h-4 w-4" />
+        {project.link.includes("notion") ? "Ver Diseño" : "Ver Docs/Demo"}
+      </a>
+    </Button>
+  )}
+  
+  {/* Caso Borde: Si solo hay link y es igual a github (para no duplicar botones) */}
+  {project.link === project.github && !project.github && (
+     <Button asChild variant="default" className="w-full">
+        <a href={project.link} target="_blank" rel="noopener noreferrer">
+           <Github className="mr-2 h-4 w-4" /> Ver Repo
+        </a>
+     </Button>
+  )}
+</CardFooter>
             </Card>
           ))}
         </div>

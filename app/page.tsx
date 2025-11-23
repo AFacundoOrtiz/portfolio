@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useScroll, useSpring } from "framer-motion";
 import { projects } from "@/data/projects";
 import { experience } from "@/data/experience";
 import { skills } from "@/data/skills";
@@ -15,6 +15,12 @@ import { ContactButton } from "@/components/ui/ContactButton"; // Verifica la ru
 import { ModeToggle } from "@/components/ui/ModeToggle"; // Verifica la ruta
 
 export default function Home() {
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
   // Configuración de animaciones
   const fadeInUp = {
     hidden: { opacity: 0, y: 20 },
@@ -40,14 +46,35 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-background text-foreground py-12 px-6 md:px-12 max-w-5xl mx-auto relative">
+      {/* BARRA DE PROGRESO */}
+  <motion.div
+    className="fixed top-0 left-0 right-0 h-1 bg-primary origin-left z-50"
+    style={{ scaleX }}
+  />
+
+      {/* --- FONDO DE CUADRÍCULA (GRID BACKGROUND) --- */}
+      <div 
+        className="absolute inset-0 z-0 pointer-events-none" 
+        style={{
+          backgroundImage: `
+            linear-gradient(to right, rgba(128, 128, 128, 0.1) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(128, 128, 128, 0.1) 1px, transparent 1px)
+          `,
+          backgroundSize: '4rem 4rem',
+          maskImage: 'radial-gradient(circle at center, black 40%, transparent 100%)',
+          WebkitMaskImage: 'radial-gradient(circle at center, black 40%, transparent 100%)' // Soporte para Chrome/Safari
+        }}
+      />
 
       {/* BOTÓN DE TEMA FLOTANTE */}
+      {/* Agregamos z-10 para asegurar que esté por encima del fondo */}
       <div className="absolute top-4 right-4 md:top-8 md:right-8 z-10">
         <ModeToggle />
       </div>
       
       {/* --- HERO SECTION --- */}
-      <section className="mb-16 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+      {/* Agregamos relative y z-10 para que el contenido flote sobre la grilla */}
+      <section className="relative z-10 mb-16 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         
         {/* Texto Animado */}
         <motion.div 

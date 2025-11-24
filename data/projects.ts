@@ -13,7 +13,7 @@ export const projects = [
     description:
       "Plataforma de gestión agrícola. Lideré el desarrollo del backend, seguridad y pagos.",
     tags: ["NestJS", "TypeScript", "PostgreSQL", "Stripe"],
-    link: "https://github.com/AgroTrackP/AgroTrack", // Link al repo
+    link: "https://agrotrack-production-5fbc.up.railway.app/api", // Link al repo
     github: "https://github.com/AgroTrackP/AgroTrack",
     highlight: true,
   },

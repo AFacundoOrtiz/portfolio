@@ -90,7 +90,7 @@ export default function Home() {
           </h2>
           
           <p className="mt-4 max-w-xl text-muted-foreground leading-relaxed">
-            Ingeniero en formación apasionado por la arquitectura de software. 
+            Ingeniero bilingüe en formación apasionado por la arquitectura de software. 
             Me especializo en construir sistemas escalables, microservicios y 
             la lógica invisible que impulsa las aplicaciones modernas.
           </p>

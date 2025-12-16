@@ -1,5 +1,14 @@
 export const projects = [
   {
+    title: "EcoShop - E-commerce Sostenible",
+    description:
+      "Backend con lógica compleja: Motor de cálculo de huella de carbono, sistema de gamificación (Eco-Wallet) y pagos con Stripe.",
+    tags: ["NestJS", "MySQL", "TypeORM", "Stripe", "Swagger"],
+    link: "https://ecoshop-dev.vercel.app",
+    github: "https://github.com/felipecalderon/nocountry-ecoshop-back",
+    highlight: true,
+  },
+  {
     title: "Microservicio AutoEngage (Pasantía)",
     description:
       "Diseño e implementación de un servicio de orquestación asíncrona para automatización de redes sociales.",

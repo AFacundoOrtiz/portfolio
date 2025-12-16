@@ -76,6 +76,8 @@
   --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
   --sidebar-border: oklch(0.929 0.013 255.508);
   --sidebar-ring: oklch(0.704 0.04 256.788);
+  --neon-color: rgba(0, 0, 0, 0.6);
+  --glow-color: rgba(0, 0, 0, 0.1);
 }
 
 .dark {
@@ -127,14 +129,31 @@
   --chart-3: hsl(12 6.5% 15.1%);
   --chart-4: hsl(60 9.1% 97.8%);
   --chart-5: hsl(20 14.3% 4.1%);
+
+  --neon-color: hsla(47.9, 95.8%, 53.1%, 0.6);
+
+  --glow-color: hsla(47.9, 95.8%, 53.1%, 0.35);
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
+    transition-property: background-color, border-color, color, fill, stroke, box-shadow, filter;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 300ms;
   }
 
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .shadow-glow {
+    box-shadow: 0 10px 25px -5px var(--glow-color), 0 8px 10px -6px var(--glow-color);
+  }
+
+  .shadow-glow-lg {
+    box-shadow: 0 20px 25px -5px var(--glow-color), 0 8px 10px -6px var(--glow-color);
   }
 }

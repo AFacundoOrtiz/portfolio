@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   title: "Facundo Ortiz | Fullstack Developer",
   description: "Portafolio de Facundo Ortiz. Fullstack Developer especializado en Backend, arquitectura de software y el ecosistema Node.js.",
   icons: {
-    icon: "/profile.png",
+    icon: "/avatar.png",
   },
 };
 

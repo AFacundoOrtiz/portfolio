@@ -9,14 +9,11 @@ export function ContactButton() {
   const email = "urban12the@gmail.com";
 
   const handleInteraction = () => {
-    // 1. Copiar al portapapeles
     navigator.clipboard.writeText(email);
     
-    // 2. Cambiar el estado para mostrar feedback visual
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
 
-    // 3. Intentar abrir el cliente de correo (opcional, pero recomendado)
     window.location.href = `mailto:${email}`;
   };
 

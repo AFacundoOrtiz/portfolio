@@ -13,8 +13,7 @@ export const AvatarNeon = () => {
     >
       <div className="relative w-64 h-64 md:w-[24rem] md:h-[24rem] shrink-0">
         <motion.div
-          animate={{ 
-            // Usamos variables CSS para que cambien automáticamente con el tema
+          animate={{
             filter: [
               "drop-shadow(0 0 8px var(--neon-color))",
               "drop-shadow(0 0 2px var(--neon-color))",

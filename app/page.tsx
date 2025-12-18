@@ -8,11 +8,11 @@ import { education } from "@/data/education";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import { Github, Linkedin, Terminal, GraduationCap, FileText, ExternalLink, ArrowDown } from "lucide-react";
 import { ModeToggle } from "@/components/ui/ModeToggle";
 import { ContactSection } from "@/components/contactSection";
 import { AvatarNeon } from "@/components/ui/avatarNeon";
+import { NeonCursor } from "@/components/ui/neonCursor";
 
 export default function Home() {
   const { scrollYProgress } = useScroll();
@@ -43,6 +43,7 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-background text-foreground py-12 px-6 md:px-12 max-w-5xl mx-auto relative overflow-x-hidden">
+      < NeonCursor />
       
       {/* BARRA DE PROGRESO */}
       <motion.div className="fixed top-0 left-0 right-0 h-1 bg-primary origin-left z-[60]" style={{ scaleX }} />

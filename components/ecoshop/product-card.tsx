@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Leaf, Droplets, ShoppingCart, Info } from 'lucide-react';
+import { Leaf, Droplets, ShoppingCart, Info, Terminal } from 'lucide-react';
 import Image from 'next/image';
 import { cn } from '@/lib/utils'; // Utilidad standard de shadcn/ui
 import type { Product, EcoBadgeLevel } from '@/types/ecoshop';
@@ -99,10 +99,13 @@ export const ProductCard = ({
           
           <button 
             onClick={() => onOpenJson(product)}
-            className="w-full mt-6 bg-white text-black py-2 rounded-lg font-semibold hover:bg-neutral-200 transition-colors flex items-center justify-center gap-2"
+            className="w-full mt-6 py-2 rounded-lg font-mono text-xs font-bold uppercase tracking-wider
+             border border-white/20 bg-white/5 text-white 
+             hover:bg-emerald-500/20 hover:border-emerald-500/50 hover:text-emerald-400 hover:shadow-[0_0_15px_rgba(16,185,129,0.4)]
+             transition-all duration-300 flex items-center justify-center gap-2 backdrop-blur-md"
           >
-            <Info className="w-4 h-4" />
-            Ver JSON Detallado
+            <Terminal className="w-4 h-4" />
+            Inspect JSON
           </button>
         </div>
       </div>

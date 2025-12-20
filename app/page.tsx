@@ -13,6 +13,7 @@ import { ModeToggle } from "@/components/ui/ModeToggle";
 import { ContactSection } from "@/components/contactSection";
 import { AvatarNeon } from "@/components/ui/avatarNeon";
 import { NeonCursor } from "@/components/ui/neonCursor";
+import { EcoShopSection } from "@/components/ecoshop/eco-shop-section";
 
 export default function Home() {
   const { scrollYProgress } = useScroll();
@@ -43,7 +44,7 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-background text-foreground py-12 px-6 md:px-12 max-w-5xl mx-auto relative overflow-x-hidden">
-      < NeonCursor />
+      <NeonCursor />
       
       {/* BARRA DE PROGRESO */}
       <motion.div className="fixed top-0 left-0 right-0 h-1 bg-primary origin-left z-[60]" style={{ scaleX }} />
@@ -81,9 +82,9 @@ export default function Home() {
             
             <div className="flex gap-4 flex-wrap justify-center md:justify-start">
               <Button size="lg" 
-  onClick={scrollToContact} 
-  className="font-semibold shadow-glow hover:shadow-glow-lg hover:translate-y-[-2px] transition-all"
-  >
+                onClick={scrollToContact} 
+                className="font-semibold shadow-glow hover:shadow-glow-lg hover:translate-y-[-2px] transition-all"
+              >
                 Contáctame!
               </Button>
               
@@ -188,38 +189,42 @@ export default function Home() {
         </div>
       </motion.section>
 
+      {/* 2. AQUÍ INSERTAMOS LA SECCIÓN DE ECOSHOP */}
+      {/* Esto crea un puente visual entre tus proyectos estáticos y tus skills técnicos */}
+      <EcoShopSection />
+
       {/* SECCIÓN: SKILLS Y EDUCACIÓN COMBINADA */}
       <div className="grid md:grid-cols-2 gap-16 mb-32">
-  <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
-    <h3 className="text-2xl font-bold mb-8">Tech Stack</h3>
-    <div className="space-y-6">
-      {Object.entries(skills).map(([category, items]) => (
-        <div key={category} className="space-y-3">
-          {/* Título de la categoría: Backend, Database, etc. */}
-          <p className="text-xs font-black text-primary uppercase tracking-widest">
-            {category}
-          </p>
-          
-          {/* Contenedor de las Badges con Stagger */}
-          <motion.div 
-            variants={containerVariants} 
-            className="flex flex-wrap gap-2"
-          >
-            {items.map((skill) => (
-              <motion.div key={skill} variants={itemVariants}>
-                <Badge 
-                  variant="secondary" 
-                  className="text-[10px] py-1 px-2 border border-transparent shadow-glow hover:border-primary/30 transition-all"
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
+          <h3 className="text-2xl font-bold mb-8">Tech Stack</h3>
+          <div className="space-y-6">
+            {Object.entries(skills).map(([category, items]) => (
+              <div key={category} className="space-y-3">
+                {/* Título de la categoría: Backend, Database, etc. */}
+                <p className="text-xs font-black text-primary uppercase tracking-widest">
+                  {category}
+                </p>
+                
+                {/* Contenedor de las Badges con Stagger */}
+                <motion.div 
+                  variants={containerVariants} 
+                  className="flex flex-wrap gap-2"
                 >
-                  {skill}
-                </Badge>
-              </motion.div>
+                  {items.map((skill) => (
+                    <motion.div key={skill} variants={itemVariants}>
+                      <Badge 
+                        variant="secondary" 
+                        className="text-[10px] py-1 px-2 border border-transparent shadow-glow hover:border-primary/30 transition-all"
+                      >
+                        {skill}
+                      </Badge>
+                    </motion.div>
+                  ))}
+                </motion.div>
+              </div>
             ))}
-          </motion.div>
-        </div>
-      ))}
-    </div>
-  </motion.div>
+          </div>
+        </motion.div>
 
         {/* Educación */}
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>

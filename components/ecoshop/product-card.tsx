@@ -3,15 +3,38 @@
 import { motion } from 'framer-motion';
 import { Leaf, Droplets, ShoppingCart, Info, Terminal } from 'lucide-react';
 import Image from 'next/image';
-import { cn } from '@/lib/utils'; // Utilidad standard de shadcn/ui
+import { cn } from '@/lib/utils';
 import type { Product, EcoBadgeLevel } from '@/types/ecoshop';
 
-// Configuración de colores según el nivel de impacto (Tu lógica de negocio)
-const BADGE_CONFIG: Record<EcoBadgeLevel, { color: string; label: string; glow: string }> = {
-  'NEUTRAL': { color: 'text-emerald-400', label: 'Carbono Neutral', glow: 'group-hover:shadow-emerald-500/50 group-hover:border-emerald-500/50' },
-  'HIGH':    { color: 'text-green-500',   label: 'Alto Impacto +',  glow: 'group-hover:shadow-green-500/50 group-hover:border-green-500/50' },
-  'MEDIUM':  { color: 'text-yellow-400',  label: 'Impacto Medio',   glow: 'group-hover:shadow-yellow-500/50 group-hover:border-yellow-500/50' },
-  'LOW':     { color: 'text-orange-500',  label: 'Bajo Impacto',    glow: 'group-hover:shadow-orange-500/50 group-hover:border-orange-500/50' },
+const BADGE_CONFIG: Record<EcoBadgeLevel, { color: string; dotColor: string; label: string; glow: string; borderColor: string }> = {
+  'NEUTRAL': { 
+    color: 'text-teal-400', 
+    dotColor: 'bg-teal-400', 
+    label: 'Carbono Neutral',
+    glow: 'group-hover:shadow-teal-500/50',
+    borderColor: 'group-hover:border-teal-500/50'
+  },
+  'HIGH': { 
+    color: 'text-green-500', 
+    dotColor: 'bg-green-500',
+    label: 'Alta Sostenibilidad',  
+    glow: 'group-hover:shadow-green-500/50',
+    borderColor: 'group-hover:border-green-500/50'
+  },
+  'MEDIUM': { 
+    color: 'text-yellow-400', 
+    dotColor: 'bg-yellow-400',
+    label: 'Eco-Friendly',   
+    glow: 'group-hover:shadow-yellow-500/50',
+    borderColor: 'group-hover:border-yellow-500/50'
+  },
+  'LOW': { 
+    color: 'text-orange-500', 
+    dotColor: 'bg-orange-500',
+    label: 'Producto Estándar',    
+    glow: 'group-hover:shadow-orange-500/50',
+    borderColor: 'group-hover:border-orange-500/50'
+  },
 };
 
 export const ProductCard = ({ 
@@ -32,7 +55,8 @@ export const ProductCard = ({
       transition={{ duration: 0.5 }}
       className={cn(
         "group relative w-full h-[400px] rounded-xl overflow-hidden bg-neutral-900 border border-neutral-800 transition-all duration-300",
-        config.glow // Aplica el efecto neón en el borde al hacer hover
+        config.glow,
+        config.borderColor
       )}
     >
       {/* --- Capa de Imagen --- */}
@@ -46,9 +70,10 @@ export const ProductCard = ({
         />
         
         {/* Badge Flotante Superior */}
-        <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-md border border-white/10 px-3 py-1 rounded-full text-xs font-medium text-white flex items-center gap-2">
-           <span className={`w-2 h-2 rounded-full ${config.color.replace('text-', 'bg-')}`} />
-           {config.label}
+        <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-md border border-white/10 px-3 py-1 rounded-full text-xs font-medium text-white flex items-center gap-2 shadow-lg z-10">
+           <span className={`w-2 h-2 rounded-full shadow-[0_0_8px_currentColor] ${config.dotColor}`} />
+           
+           <span className={config.color}>{config.label}</span>
         </div>
       </div>
 

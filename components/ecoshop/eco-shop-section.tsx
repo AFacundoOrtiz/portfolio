@@ -7,6 +7,7 @@ import { ProductCard } from "@/components/ecoshop/product-card";
 import { Product } from "@/types/ecoshop"; 
 import { Button } from "@/components/ui/button";
 import { JsonTerminal } from "@/components/ecoshop/json-terminal";
+import { AdminDashboardDemo } from "./adminDashboardDemo";
 
 export function EcoShopSection() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -52,14 +53,11 @@ export function EcoShopSection() {
       }}
       className="mb-32 relative"
     >
-      {/* 2. RENDERIZAR LA TERMINAL AQUÍ */}
-      {/* Se mostrará automáticamente cuando selectedProduct no sea null */}
       <JsonTerminal 
         product={selectedProduct} 
         onClose={() => setSelectedProduct(null)} 
       />
 
-      {/* Decoración de fondo sutil */}
       <div className="absolute -left-20 top-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-[100px] pointer-events-none" />
 
       <div className="flex items-center gap-4 mb-8">
@@ -82,7 +80,6 @@ export function EcoShopSection() {
         <span className="text-xs ml-2 text-emerald-500 opacity-70">(Pasa el mouse sobre las tarjetas)</span>
       </p>
 
-      {/* ESTADO: CARGANDO */}
       {loading && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[1, 2, 3].map((i) => (
@@ -91,7 +88,6 @@ export function EcoShopSection() {
         </div>
       )}
 
-      {/* ESTADO: ERROR (Backend apagado) */}
       {!loading && error && (
         <div className="border border-red-500/20 bg-red-500/5 rounded-xl p-8 text-center space-y-4">
           <Server className="w-12 h-12 text-red-500 mx-auto opacity-50" />
@@ -105,7 +101,6 @@ export function EcoShopSection() {
         </div>
       )}
 
-      {/* ESTADO: ÉXITO */}
       {!loading && !error && products.length > 0 && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {products.map((product) => (
@@ -117,6 +112,9 @@ export function EcoShopSection() {
           ))}
         </div>
       )}
+      <div className="mt-16 border-t border-neutral-800 pt-12">
+          <AdminDashboardDemo />
+       </div>
     </motion.section>
   );
 }

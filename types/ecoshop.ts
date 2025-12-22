@@ -20,3 +20,9 @@ export interface Product {
     name: string;
   };
 }
+export interface AdminStats {
+  totalRevenue: number;
+  totalOrders: number;
+  totalCo2Saved: number;
+  totalUsers: number;
+}

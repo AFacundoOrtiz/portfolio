@@ -26,3 +26,29 @@ export interface AdminStats {
   totalCo2Saved: number;
   totalUsers: number;
 }
+
+export interface CreateOrderDto {
+  addressId: string;
+  items: {
+    productId: string;
+    quantity: number;
+  }[];
+  couponCode?: string;
+}
+
+export interface CheckoutResponse {
+  url: string;
+}
+
+export interface Address {
+  id: string;
+  street: string;
+  country: string;
+}
+
+export interface OrderCreatedResponse {
+  orderId: string;
+  totalPrice: number;
+  totalCarbonFootprint: number;
+  message: string;
+}

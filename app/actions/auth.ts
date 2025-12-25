@@ -1,14 +1,14 @@
 "use server";
 
 export async function getDemoAdminToken() {
-  const url = `https://${process.env.AUTH0_DOMAIN}/oauth/token`;
+  const url = `https://${process.env.NEXT_PUBLIC_AUTH0_DOMAIN}/oauth/token`;
 
   const body = {
     grant_type: "http://auth0.com/oauth/grant-type/password-realm",
     username: process.env.DEMO_ADMIN_EMAIL,
     password: process.env.DEMO_ADMIN_PASSWORD,
-    audience: process.env.AUTH0_AUDIENCE,
-    client_id: process.env.AUTH0_CLIENT_ID,
+    audience: process.env.NEXT_PUBLIC_AUTH0_AUDIENCE,
+    client_id: process.env.NEXT_PUBLIC_AUTH0_CLIENT_ID,
     client_secret: process.env.AUTH0_CLIENT_SECRET,
     scope: "openid profile email",
     realm: "Username-Password-Authentication",

@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { JsonTerminal } from "@/components/ecoshop/json-terminal";
 import { AdminDashboardDemo } from "./adminDashboardDemo";
 import { CartSidebar } from "@/components/ecoshop/cartSidebar";
+import { EcoProfileSidebar } from "./eco-profile-sidebar";
 
 export function EcoShopSection() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -78,8 +79,7 @@ export function EcoShopSection() {
                 <div className={`w-2 h-2 rounded-full ${error ? 'bg-red-500' : 'bg-emerald-500 animate-pulse'}`} />
                 {error ? "API Offline" : "API Connected: NestJS"}
             </div>
-
-            {/* <--- 2. Aquí insertamos el Carrito */}
+            <EcoProfileSidebar />
             <CartSidebar /> 
         </div>
       </div>

@@ -52,3 +52,25 @@ export interface OrderCreatedResponse {
   totalCarbonFootprint: number;
   message: string;
 }
+
+export interface WalletBalance {
+  balance: number;
+  level: string;
+  nextLevelThreshold: number;
+}
+
+export interface ImpactStats {
+  totalOrders: number;
+  co2SavedKg: number;
+  treesEquivalent: number;
+  ecoLevel: string;
+  nextGoal: number;
+}
+
+export interface WalletTransaction {
+  id: string;
+  amount: number;
+  type: "EARN" | "REDEEM" | "ADJUST";
+  description: string;
+  createdAt: string;
+}

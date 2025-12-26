@@ -10,6 +10,7 @@ import { JsonTerminal } from "@/components/ecoshop/json-terminal";
 import { AdminDashboardDemo } from "./adminDashboardDemo";
 import { CartSidebar } from "@/components/ecoshop/cartSidebar";
 import { EcoProfileSidebar } from "./eco-profile-sidebar";
+import { Suspense } from 'react';
 
 export function EcoShopSection() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -79,7 +80,9 @@ export function EcoShopSection() {
                 <div className={`w-2 h-2 rounded-full ${error ? 'bg-red-500' : 'bg-emerald-500 animate-pulse'}`} />
                 {error ? "API Offline" : "API Connected: NestJS"}
             </div>
-            <EcoProfileSidebar />
+            <Suspense fallback={<div className="w-10 h-10" />}>
+              <EcoProfileSidebar />
+            </Suspense>
             <CartSidebar /> 
         </div>
       </div>

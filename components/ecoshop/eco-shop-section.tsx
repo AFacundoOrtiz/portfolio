@@ -82,7 +82,9 @@ export function EcoShopSection() {
               <EcoProfileSidebar />
             </Suspense>
             <CartSidebar /> 
-            <UserMenu />
+            <Suspense fallback={<div className="w-9 h-9 rounded-full bg-gray-100 dark:bg-white/5 animate-pulse" />}>
+                <UserMenu />
+            </Suspense>
         </div>
       </div>
 

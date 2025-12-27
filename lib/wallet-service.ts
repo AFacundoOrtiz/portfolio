@@ -1,4 +1,4 @@
-import { Reward, Coupon } from "@/types/ecoshop"; // Definiremos estos tipos abajo
+import { Reward, Coupon } from "@/types/ecoshop";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3010";
 
@@ -29,7 +29,6 @@ export async function getRewards(token: string) {
 }
 
 export async function getMyCoupons(token: string) {
-  // onlyActive=true para mostrar solo los válidos en el checkout
   return authFetch<Coupon[]>("/wallet/coupons?onlyActive=true", token);
 }
 

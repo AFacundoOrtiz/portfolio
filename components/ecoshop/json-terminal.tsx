@@ -13,7 +13,6 @@ interface JsonTerminalProps {
 export const JsonTerminal = ({ product, onClose }: JsonTerminalProps) => {
   const [copied, setCopied] = useState(false);
 
-  // Función para copiar al portapapeles
   const handleCopy = () => {
     if (!product) return;
     navigator.clipboard.writeText(JSON.stringify(product, null, 2));
@@ -25,7 +24,6 @@ export const JsonTerminal = ({ product, onClose }: JsonTerminalProps) => {
     <AnimatePresence>
       {product && (
         <>
-          {/* Backdrop (Fondo oscuro) */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -34,14 +32,12 @@ export const JsonTerminal = ({ product, onClose }: JsonTerminalProps) => {
             className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[9998]"
           />
 
-          {/* Ventana Modal Tipo Terminal */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             className="fixed top-[10%] left-0 right-0 mx-auto w-[90%] max-w-4xl h-[80vh] bg-[#1e1e1e] border border-neutral-700 rounded-xl shadow-2xl z-[9999] overflow-hidden flex flex-col font-mono"
           >
-            {/* Barra de Título (Header) */}
             <div className="flex items-center justify-between px-4 py-3 bg-[#2d2d2d] border-b border-neutral-700">
               <div className="flex items-center gap-2">
                 <div className="flex gap-1.5">
@@ -71,7 +67,6 @@ export const JsonTerminal = ({ product, onClose }: JsonTerminalProps) => {
               </div>
             </div>
 
-            {/* Contenido JSON (Body) */}
             <div className="flex-1 overflow-auto p-6 custom-scrollbar">
               <pre className="text-sm leading-relaxed">
                 <code className="language-json text-blue-300">
@@ -80,7 +75,6 @@ export const JsonTerminal = ({ product, onClose }: JsonTerminalProps) => {
               </pre>
             </div>
 
-            {/* Footer Informativo */}
             <div className="px-4 py-2 bg-[#252526] border-t border-neutral-700 text-[10px] text-neutral-500 flex justify-between">
               <span>HTTP 200 OK</span>
               <span>{new Date().toLocaleTimeString()}</span>

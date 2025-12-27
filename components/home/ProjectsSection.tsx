@@ -9,7 +9,6 @@ import { SectionHeader } from "@/components/ui/sectionHeader";
 import { ANIMATION_VARIANTS } from "@/lib/animations";
 import { Project } from "@/types/portfolio";
 
-// Helper Component (Internal)
 const ProjectCard = ({ project }: { project: Project }) => (
   <Card className="group border-muted bg-card/40 backdrop-blur-md flex flex-col hover:border-primary/50 hover:shadow-glow transition-all duration-500 overflow-hidden">
     <CardHeader>

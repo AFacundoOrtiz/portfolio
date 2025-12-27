@@ -52,7 +52,6 @@ export const ProductCard = ({
   const { carbonFootprint, waterUsage, ecoBadgeLevel } = impact;
   const config = BADGE_CONFIG[ecoBadgeLevel] || BADGE_CONFIG['LOW'];
 
-  // --- 3. Lógica del Carrito ---
   const addItem = useCartStore((state) => state.addItem);
 
   const handleAddToCart = (e: React.MouseEvent) => {
@@ -78,7 +77,6 @@ export const ProductCard = ({
         config.borderColor
       )}
     >
-      {/* ... (MANTENER CAPA DE IMAGEN IGUAL) ... */}
       <div className="relative h-full w-full">
         <Image
           src={product.image}
@@ -93,19 +91,16 @@ export const ProductCard = ({
         </div>
       </div>
 
-      {/* ... (MANTENER INFORMACIÓN BÁSICA IGUAL) ... */}
       <div className="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black via-black/80 to-transparent transition-transform duration-300 group-hover:-translate-y-2">
         <h3 className="text-xl font-bold text-white mb-1 truncate">{product.name}</h3>
         <p className="text-neutral-400 text-sm mb-2">{product.brand?.name || 'EcoBrand'}</p>
         <div className="text-2xl font-light text-white">${Number(product.price).toFixed(2)}</div>
       </div>
 
-      {/* --- CAPA DE REVELACIÓN (AQUÍ ESTÁ LA MAGIA) --- */}
       <div className="absolute inset-0 flex flex-col justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-6 bg-black/60 backdrop-blur-sm">
         
         <div className="w-full space-y-4">
           
-          {/* ... (MANTENER MÉTRICAS CO2 Y AGUA IGUAL) ... */}
            <div className="text-center mb-4">
             <h4 className="text-sm uppercase tracking-widest text-neutral-400 font-semibold border-b border-neutral-700 pb-2">
               Huella Ambiental
@@ -134,10 +129,8 @@ export const ProductCard = ({
             />
           </div>
           
-          {/* --- NUEVO: CONTROLES DE ACCIÓN + CANTIDAD --- */}
           <div className="flex flex-col gap-3 mt-4 w-full">
             
-            {/* 1. Selector de Cantidad */}
             <div className="flex items-center justify-between bg-black/40 rounded-full p-1 border border-white/10 w-32 mx-auto backdrop-blur-md shadow-inner">
               <button 
                 onClick={(e) => adjustQuantity(e, -1)}
@@ -159,7 +152,6 @@ export const ProductCard = ({
               </button>
             </div>
 
-            {/* 2. Botones de Acción */}
             <div className="flex gap-2">
               <button 
                 onClick={handleAddToCart}
@@ -168,7 +160,6 @@ export const ProductCard = ({
                   transition-all duration-200 flex items-center justify-center gap-2 shadow-lg"
               >
                 <ShoppingCart className="w-4 h-4" />
-                {/* Texto dinámico opcional: Añadir (3) */}
                 Añadir {quantity > 1 ? `(${quantity})` : ''}
               </button>
 

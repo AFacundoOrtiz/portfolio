@@ -56,7 +56,6 @@ export function CartSidebar() {
   }, [isAuthenticated, isOpen, getAccessTokenSilently]);
 
 
-  // 2. Carga Manual (Demo)
   const handleLoadDemoCoupons = async () => {
     setLoadingCoupons(true);
     try {
@@ -67,7 +66,6 @@ export function CartSidebar() {
         
         console.log("📦 API Raw Coupons:", myCoupons);
         
-        // APLICAMOS EL NUEVO FILTRO BASADO EN 'isUsed'
         const activeCoupons = filterValidCoupons(myCoupons);
         
         console.log("✅ Cupones Válidos:", activeCoupons);
@@ -170,7 +168,6 @@ export function CartSidebar() {
         {items.length > 0 && (
           <SheetFooter className="border-t border-gray-200 dark:border-white/10 pt-6 sm:flex-col gap-4">
             
-            {/* --- SECCIÓN DE CUPONES --- */}
             <div className="w-full space-y-2 mb-2 animate-in fade-in slide-in-from-bottom-2">
                 <div className="flex items-center gap-2 text-xs font-bold text-gray-500 dark:text-muted-foreground uppercase tracking-wider">
                   <Ticket className="w-3 h-3" /> Mis Cupones
@@ -239,7 +236,6 @@ export function CartSidebar() {
 
             </div>
 
-            {/* TOTALES */}
             <div className="space-y-1 w-full">
               {selectedCoupon && (
                 <div className="flex justify-between items-center text-sm text-green-600 dark:text-emerald-400">

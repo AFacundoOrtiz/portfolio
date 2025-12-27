@@ -42,16 +42,13 @@ export function EcoProfileSidebar() {
     const action = searchParams.get('action');
 
     const initializeDemo = async (showWelcomeToast: boolean, clearTheCart: boolean) => {
-        // 1. Si hay que limpiar carrito (Viene de Stripe)
         if (clearTheCart) {
             clearCart();
             toast.success("¡Pago exitoso! Has ganado EcoPoints 🌱", { duration: 5000 });
         } else if (showWelcomeToast) {
-            // 2. Si solo es login (Viene del botón)
             toast.success("¡Bienvenido al Modo Demo!", { icon: '👋' });
         }
 
-        // 3. Autenticación Demo (Si no es usuario Auth0)
         if (!isAuthenticated) {
             try {
                 const res = await getDemoAdminToken();
@@ -64,18 +61,14 @@ export function EcoProfileSidebar() {
             }
         }
         
-        // 4. Abrir Sidebar y Limpiar URL
         setIsOpen(true);
-        // IMPORTANTE: Limpiamos la URL pero mantenemos el usuario en estado local
         setTimeout(() => router.replace(window.location.pathname, { scroll: false }), 1000);
     };
 
     if (status === 'success') {
-        // ESCENARIO 1: VUELVE DE STRIPE
-        initializeDemo(false, true); // No toast bienvenida (usa el de pago), Si limpiar carrito
+        initializeDemo(false, true);
     } else if (action === 'demo_login') {
-        // ESCENARIO 2: CLICK EN ACCEDER DEMO
-        initializeDemo(true, false); // Si toast bienvenida, No limpiar carrito
+        initializeDemo(true, false);
     }
 
   }, [searchParams, isLoading, isAuthenticated, clearCart, router]);
@@ -113,7 +106,6 @@ export function EcoProfileSidebar() {
     }
   }, [isOpen, isAuthenticated, isLoading, getAccessTokenSilently, demoToken]);
 
-  // FUNCIONES DE ACCIÓN
   const handleRedeem = async (reward: Reward) => {
     if ((data.wallet?.balance || 0) < reward.costInPoints) {
         toast.error("Puntos insuficientes");
@@ -128,7 +120,6 @@ export function EcoProfileSidebar() {
             await redeemReward(token, reward.id, reward.costInPoints);
             toast.success(`¡Canjeado! Has obtenido: ${reward.name}`);
             
-            // Recargar datos para actualizar saldo
             const [profile, couponsList] = await Promise.all([
                 getUserProfileData(token),
                 getMyCoupons(token)
@@ -145,27 +136,21 @@ export function EcoProfileSidebar() {
       toast.success("Código copiado al portapapeles");
   };
 
-  // 2. FUNCIÓN DE LOGOUT HÍBRIDA
   const handleLogout = () => {
     if (isDemoUser) {
-        // Reset local para usuario Demo
         setIsDemoUser(false);
         setDemoToken(null);
         setIsOpen(false);
-        // IMPORTANTE: Limpiamos la bandera de sesión
         sessionStorage.removeItem('isDemoSession');
         toast.info("Sesión demo cerrada");
-        // Recargamos para que el UserMenu vuelva a detectar el estado inicial
         window.location.reload();
     } else {
-        // Logout real de Auth0
         logout({ logoutParams: { returnTo: window.location.origin } });
     }
   };
 
   if (isLoading) return null;
   
-  // Determinamos si mostramos el trigger
   const hasToken = isAuthenticated || isDemoUser;
   if (!hasToken) return null;
 
@@ -175,7 +160,6 @@ export function EcoProfileSidebar() {
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
-      {/* 3. TRIGGER PERSONALIZADO: AVATAR */}
       <SheetTrigger asChild>
         <Button 
           variant="ghost" 
@@ -195,7 +179,6 @@ export function EcoProfileSidebar() {
         </Button>
       </SheetTrigger>
 
-      {/* 4. CONTENIDO CON FLEX-COL PARA EMPUJAR EL FOOTER */}
       <SheetContent side="left" className="w-full sm:w-[400px] bg-white/95 dark:bg-neutral-950/95 backdrop-blur-xl border-r border-gray-200 dark:border-neutral-800 overflow-y-auto flex flex-col h-full">
          
          <SheetHeader className="mb-6 flex-shrink-0">
@@ -204,7 +187,6 @@ export function EcoProfileSidebar() {
           </SheetTitle>
         </SheetHeader>
 
-        {/* HEADER DE USUARIO (Visual extra) */}
         <div className="flex items-center gap-3 mb-6 p-3 rounded-xl bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/5 flex-shrink-0">
             <Avatar className="h-10 w-10 border border-emerald-500/30">
                 <AvatarImage src={displayUser?.picture} />
@@ -218,7 +200,6 @@ export function EcoProfileSidebar() {
             </div>
         </div>
 
-        {/* TABS */}
         <div className="flex gap-2 mb-6 p-1 bg-gray-100 dark:bg-white/5 rounded-lg flex-shrink-0">
             <button 
                 onClick={() => setActiveTab('profile')}
@@ -241,7 +222,6 @@ export function EcoProfileSidebar() {
         ) : (
           <div className="flex flex-col flex-1 space-y-6">
             
-            {/* SALDO */}
             <div className="flex justify-between items-center p-4 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-700 text-white shadow-lg flex-shrink-0">
                 <div>
                     <p className="text-xs text-emerald-100 uppercase tracking-wider font-bold">Saldo Disponible</p>
@@ -250,7 +230,6 @@ export function EcoProfileSidebar() {
                 <Trophy className="w-8 h-8 text-yellow-300 opacity-80" />
             </div>
 
-            {/* CONTENIDO SCROLLEABLE */}
             <div className="flex-1 min-h-0">
                 {activeTab === 'profile' ? (
                     <div className="space-y-6 animate-in fade-in slide-in-from-left-4">
@@ -269,7 +248,6 @@ export function EcoProfileSidebar() {
                     </div>
                 ) : (
                     <div className="space-y-6 animate-in fade-in slide-in-from-right-4">
-                        {/* Rewards */}
                         <div>
                              <h5 className="text-sm font-bold mb-3 flex items-center gap-2 dark:text-white"><Gift className="w-4 h-4 text-purple-500" /> Canjear Puntos</h5>
                              <div className="space-y-3">
@@ -292,7 +270,6 @@ export function EcoProfileSidebar() {
                 )}
             </div>
 
-            {/* 5. FOOTER CON LOGOUT */}
             <div className="mt-auto pt-4 border-t border-gray-200 dark:border-white/10 flex-shrink-0">
                  <Button 
                     variant="ghost" 

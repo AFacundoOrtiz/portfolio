@@ -17,7 +17,6 @@ export function EcoProfileSidebar() {
   const [isOpen, setIsOpen] = useState(false);
   const [dataLoading, setDataLoading] = useState(false);
   
-  // Estado para manejar el token cuando es modo demo
   const [demoToken, setDemoToken] = useState<string | null>(null);
   const [isDemoUser, setIsDemoUser] = useState(false);
 
@@ -31,19 +30,14 @@ export function EcoProfileSidebar() {
     history: WalletTransaction[];
   }>({ impact: null, wallet: null, history: [] });
 
-  // --- EFECTO 1: MANEJO DEL "SUCCESS" + AUTO-LOGIN DEMO ---
   useEffect(() => {
     if (isLoading) return;
-
     const status = searchParams.get('status');
-
     if (status === 'success') {
       const handleSuccess = async () => {
-        // 1. Limpiamos carrito y avisamos
         clearCart();
         toast.success("¡Pago exitoso! Has ganado EcoPoints 🌱", { duration: 5000 });
 
-        // 2. Si NO está logueado, asumimos flujo DEMO y obtenemos token
         if (!isAuthenticated) {
           try {
             const res = await getDemoAdminToken();
@@ -55,35 +49,25 @@ export function EcoProfileSidebar() {
             console.error("Error auto-login demo", e);
           }
         }
-
-        // 3. Abrimos el sidebar
         setIsOpen(true);
-
-        // 4. Limpiamos URL después de un momento
         setTimeout(() => {
           router.replace(window.location.pathname, { scroll: false });
         }, 1000);
       };
-
       handleSuccess();
     }
   }, [searchParams, isLoading, isAuthenticated, clearCart, router]);
 
-  // --- EFECTO 2: CARGA DE DATOS (Soporta Auth0 y Demo Token) ---
   useEffect(() => {
-    // Cargar si está abierto Y (está autenticado O tiene token demo)
     const hasToken = isAuthenticated || demoToken;
-
     if (isOpen && hasToken && !isLoading) {
       const loadData = async () => {
         setDataLoading(true);
         try {
-          // Decidimos qué token usar
           let token = demoToken;
           if (isAuthenticated) {
             token = await getAccessTokenSilently();
           }
-
           if (token) {
             const profileData = await getUserProfileData(token);
             setData(profileData);
@@ -99,14 +83,9 @@ export function EcoProfileSidebar() {
     }
   }, [isOpen, isAuthenticated, isLoading, getAccessTokenSilently, demoToken]);
 
-  // RENDERIZADO CONDICIONAL:
-  // Si está cargando Auth0, esperamos.
   if (isLoading) return null;
-  
-  // Si NO está autenticado Y NO es modo demo, ocultamos el componente (botón invisible)
   if (!isAuthenticated && !isDemoUser) return null;
 
-  // Datos del usuario a mostrar (Real o Demo)
   const displayUser = isDemoUser 
     ? { name: "Demo User", picture: "https://github.com/shadcn.png" } 
     : user;
@@ -114,41 +93,46 @@ export function EcoProfileSidebar() {
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
-        <Button variant="ghost" size="icon" className="rounded-full hover:bg-emerald-500/10 hover:text-emerald-400 text-muted-foreground transition-colors">
-          <User className={`h-5 w-5 ${data.wallet?.level ? 'text-emerald-500' : ''}`} />
+        <Button variant="ghost" size="icon" className="rounded-full hover:bg-emerald-500/10 hover:text-emerald-600 dark:hover:text-emerald-400 text-gray-600 dark:text-muted-foreground transition-colors">
+          <User className={`h-5 w-5 ${data.wallet?.level ? 'text-emerald-600 dark:text-emerald-500' : ''}`} />
         </Button>
       </SheetTrigger>
 
-      <SheetContent side="left" className="w-full sm:w-[400px] bg-neutral-950/90 backdrop-blur-xl border-r border-neutral-800 text-white overflow-y-auto">
+      <SheetContent side="left" className="w-full sm:w-[400px] 
+        bg-white/90 dark:bg-neutral-950/90 
+        backdrop-blur-xl 
+        border-r border-gray-200 dark:border-neutral-800 
+        overflow-y-auto">
+         
          <SheetHeader className="mb-8">
-          <SheetTitle className="flex items-center gap-3 text-emerald-400">
+          <SheetTitle className="flex items-center gap-3 text-emerald-600 dark:text-emerald-400">
             <Leaf className="w-6 h-6" /> Mi Impacto Eco
           </SheetTitle>
         </SheetHeader>
 
         {dataLoading ? (
           <div className="flex justify-center py-20">
-            <Loader2 className="w-8 h-8 animate-spin text-emerald-500" />
+            <Loader2 className="w-8 h-8 animate-spin text-emerald-600 dark:text-emerald-500" />
           </div>
         ) : (
           <div className="space-y-8 animate-in fade-in slide-in-from-left-4 duration-500">
             
-            {/* 1. HEADER */}
-            <div className="flex items-center gap-4 p-4 rounded-xl bg-white/5 border border-white/10">
+            <div className="flex items-center gap-4 p-4 rounded-xl transition-colors
+                bg-gray-100 dark:bg-white/5 
+                border border-gray-200 dark:border-white/10">
               <img 
                 src={displayUser?.picture || "https://github.com/shadcn.png"} 
                 alt="User" 
                 className="w-12 h-12 rounded-full border-2 border-emerald-500"
               />
               <div>
-                <h4 className="font-bold text-white">{displayUser?.name}</h4>
-                <p className="text-xs text-emerald-400 font-mono flex items-center gap-1">
+                <h4 className="font-bold text-gray-900 dark:text-white">{displayUser?.name}</h4>
+                <p className="text-xs text-emerald-600 dark:text-emerald-400 font-mono flex items-center gap-1">
                   <Trophy className="w-3 h-3" /> {data.wallet?.level || "Explorador"}
                 </p>
               </div>
             </div>
 
-            {/* 2. WALLET BALANCE */}
             <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-600 to-teal-800 p-6 shadow-lg">
                <div className="relative z-10">
                  <p className="text-emerald-100 text-sm font-medium mb-1">Eco-Wallet Balance</p>
@@ -170,36 +154,40 @@ export function EcoProfileSidebar() {
                <Leaf className="absolute -bottom-4 -right-4 w-32 h-32 text-white/10 rotate-12" />
             </div>
 
-            {/* 3. GRID DE IMPACTO */}
             <div className="grid grid-cols-2 gap-4">
-               <div className="p-4 rounded-xl bg-neutral-900 border border-neutral-800 flex flex-col items-center justify-center text-center gap-2">
-                  <Leaf className="w-6 h-6 text-green-500" />
-                  <span className="text-2xl font-bold text-white">{data.impact?.co2SavedKg.toFixed(1) ?? 0} kg</span>
-                  <span className="text-xs text-muted-foreground">CO₂ Ahorrado</span>
+               <div className="p-4 rounded-xl flex flex-col items-center justify-center text-center gap-2 transition-colors
+                    bg-white dark:bg-neutral-900 
+                    border border-gray-200 dark:border-neutral-800 shadow-sm dark:shadow-none">
+                  <Leaf className="w-6 h-6 text-green-600 dark:text-green-500" />
+                  <span className="text-2xl font-bold text-gray-900 dark:text-white">{data.impact?.co2SavedKg.toFixed(1) ?? 0} kg</span>
+                  <span className="text-xs text-gray-500 dark:text-muted-foreground">CO₂ Ahorrado</span>
                </div>
-               <div className="p-4 rounded-xl bg-neutral-900 border border-neutral-800 flex flex-col items-center justify-center text-center gap-2">
-                  <TrendingUp className="w-6 h-6 text-blue-500" />
-                  <span className="text-2xl font-bold text-white">{data.impact?.totalOrders ?? 0}</span>
-                  <span className="text-xs text-muted-foreground">Órdenes Sostenibles</span>
+               <div className="p-4 rounded-xl flex flex-col items-center justify-center text-center gap-2 transition-colors
+                    bg-white dark:bg-neutral-900 
+                    border border-gray-200 dark:border-neutral-800 shadow-sm dark:shadow-none">
+                  <TrendingUp className="w-6 h-6 text-blue-600 dark:text-blue-500" />
+                  <span className="text-2xl font-bold text-gray-900 dark:text-white">{data.impact?.totalOrders ?? 0}</span>
+                  <span className="text-xs text-gray-500 dark:text-muted-foreground">Órdenes Sostenibles</span>
                </div>
             </div>
 
-            {/* 4. HISTORIAL */}
             <div>
-              <h5 className="text-sm font-bold text-muted-foreground mb-4 flex items-center gap-2">
+              <h5 className="text-sm font-bold text-gray-600 dark:text-muted-foreground mb-4 flex items-center gap-2">
                 <History className="w-4 h-4" /> Historial Reciente
               </h5>
               <div className="space-y-3">
                 {data.history.length === 0 ? (
-                    <p className="text-sm text-muted-foreground text-center py-4">Aún no tienes movimientos.</p>
+                    <p className="text-sm text-gray-500 dark:text-muted-foreground text-center py-4">Aún no tienes movimientos.</p>
                 ) : (
                     data.history.slice(0, 5).map((tx) => (
-                    <div key={tx.id} className="flex justify-between items-center p-3 rounded-lg bg-neutral-900/50 border border-neutral-800">
+                    <div key={tx.id} className="flex justify-between items-center p-3 rounded-lg transition-colors
+                        bg-gray-50 dark:bg-neutral-900/50 
+                        border border-gray-200 dark:border-neutral-800">
                         <div className="flex flex-col">
-                            <span className="text-sm text-white font-medium truncate max-w-[150px]">{tx.description}</span>
-                            <span className="text-[10px] text-neutral-500">{new Date(tx.createdAt).toLocaleDateString()}</span>
+                            <span className="text-sm text-gray-900 dark:text-white font-medium truncate max-w-[150px]">{tx.description}</span>
+                            <span className="text-[10px] text-gray-500 dark:text-neutral-500">{new Date(tx.createdAt).toLocaleDateString()}</span>
                         </div>
-                        <span className={`font-mono font-bold ${tx.type === 'EARN' ? 'text-emerald-400' : 'text-red-400'}`}>
+                        <span className={`font-mono font-bold ${tx.type === 'EARN' ? 'text-emerald-600 dark:text-emerald-400' : 'text-red-600 dark:text-red-400'}`}>
                             {tx.type === 'EARN' ? '+' : '-'}{tx.amount}
                         </span>
                     </div>

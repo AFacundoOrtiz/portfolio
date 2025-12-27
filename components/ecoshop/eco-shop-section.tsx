@@ -11,6 +11,7 @@ import { AdminDashboardDemo } from "./adminDashboardDemo";
 import { CartSidebar } from "@/components/ecoshop/cartSidebar";
 import { EcoProfileSidebar } from "./eco-profile-sidebar";
 import { Suspense } from 'react';
+import { UserMenu } from './user-menu';
 
 export function EcoShopSection() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -84,6 +85,7 @@ export function EcoShopSection() {
               <EcoProfileSidebar />
             </Suspense>
             <CartSidebar /> 
+            <UserMenu />
         </div>
       </div>
 

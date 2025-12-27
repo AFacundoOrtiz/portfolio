@@ -74,3 +74,20 @@ export interface WalletTransaction {
   description: string;
   createdAt: string;
 }
+
+export interface Reward {
+  id: string;
+  name: string;
+  description: string;
+  costInPoints: number;
+  type: "COUPON" | "DONATION" | "PRODUCT";
+  isActive: boolean;
+}
+
+export interface Coupon {
+  id: string;
+  code: string;
+  discountPercentage: number;
+  isUsed: boolean;
+  expiresAt: string;
+}

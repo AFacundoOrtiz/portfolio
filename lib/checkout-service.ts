@@ -38,11 +38,10 @@ async function authFetch<T>(
 
 export async function processCheckout(
   token: string,
-  cartItems: (Product & { quantity: number })[]
+  cartItems: (Product & { quantity: number })[],
+  couponCode?: string
 ) {
   try {
-    // 1. OBTENER O CREAR DIRECCIÓN
-    // Usamos la interfaz Address importada
     const addresses = await authFetch<Address[]>("/addresses", token);
     let addressId = "";
 
@@ -63,19 +62,17 @@ export async function processCheckout(
       addressId = updatedAddresses[0].id;
     }
 
-    // 2. PREPARAR ITEMS
     const orderItems = cartItems.map((item) => ({
       productId: item.id,
       quantity: item.quantity,
     }));
 
-    // 3. CREAR LA ORDEN
-    // Usamos OrderCreatedResponse importada
     const orderData = await authFetch<OrderCreatedResponse>("/orders", token, {
       method: "POST",
       body: JSON.stringify({
         addressId,
         items: orderItems,
+        couponCode: couponCode || undefined,
       }),
     });
 
@@ -83,11 +80,9 @@ export async function processCheckout(
 
     if (!orderId) throw new Error("No se pudo obtener el ID de la orden");
 
-    // 4. CREAR SESIÓN DE PAGO (STRIPE)
     const currentUrl =
       typeof window !== "undefined" ? window.location.origin : "";
 
-    // Usamos CheckoutResponse que ya tenías en tu archivo de tipos (tiene { url: string })
     const session = await authFetch<CheckoutResponse>(
       "/payments/create-checkout-session",
       token,
